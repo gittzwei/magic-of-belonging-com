@@ -15,7 +15,7 @@ const inputAnimation = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.4 }
+    transition: { duration: 0.4, ease: "easeOut" }
   }
 };
 
@@ -44,29 +44,41 @@ export default function ContactPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         {/* Header Section */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-sm font-semibold text-indigo-600 uppercase tracking-wider">
-            Let's Connect
-          </h2>
-          <h1 className="mt-2 text-4xl font-extrabold text-gray-900 sm:text-5xl">
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center justify-center px-4 py-2 bg-indigo-100 rounded-full mb-4"
+          >
+            <span className="text-sm font-semibold text-indigo-600 uppercase tracking-wider">
+              Let's Connect
+            </span>
+          </motion.div>
+          <h1 className="mt-2 text-4xl font-extrabold text-gray-900 sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
             Get in Touch
           </h1>
-          <div className="mt-6 max-w-2xl mx-auto">
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: '100%' }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="mt-6 max-w-2xl mx-auto"
+          >
             <p className="text-xl text-gray-600">
               Have questions or want to share your story? We'd love to hear from you.
             </p>
             <div className="mt-6 flex justify-center">
-              <div className="h-1 w-20 bg-indigo-500 rounded-full"></div>
+              <div className="h-1 w-20 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"></div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Form Section */}
@@ -80,13 +92,13 @@ export default function ContactPage() {
               }
             }
           }}
-          className="bg-white shadow-xl rounded-2xl overflow-hidden p-8 sm:p-10"
+          className="bg-white/90 backdrop-blur-sm shadow-2xl rounded-2xl overflow-hidden p-8 sm:p-10 border border-white/20"
         >
           {submitted && (
             <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="mb-8 p-4 rounded-lg bg-green-50 border border-green-200 text-green-700"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-8 p-4 rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200/50 text-green-700 shadow-sm"
             >
               <div className="flex items-center">
                 <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -98,9 +110,9 @@ export default function ContactPage() {
           )}
           {error && (
             <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="mb-8 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-8 p-4 rounded-lg bg-gradient-to-r from-red-50 to-pink-50 border border-red-200/50 text-red-700 shadow-sm"
             >
               <div className="flex items-center">
                 <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -114,7 +126,7 @@ export default function ContactPage() {
           <form onSubmit={formik.handleSubmit} className="space-y-8">
             <motion.div variants={inputAnimation}>
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1 ml-1">
                   Full Name
                 </label>
                 <div className="relative">
@@ -122,7 +134,7 @@ export default function ContactPage() {
                     id="name"
                     name="name"
                     type="text"
-                    className={`block w-full px-4 py-3 rounded-lg border ${formik.touched.name && formik.errors.name ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'} focus:ring-2 focus:outline-none transition`}
+                    className={`block w-full px-4 py-3 rounded-xl border-2 ${formik.touched.name && formik.errors.name ? 'border-red-300 focus:ring-2 focus:ring-red-200 focus:border-red-500' : 'border-gray-200 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500'} focus:outline-none transition bg-white/70 backdrop-blur-sm shadow-sm`}
                     value={formik.values.name}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -143,7 +155,7 @@ export default function ContactPage() {
 
             <motion.div variants={inputAnimation}>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 ml-1">
                   Email Address
                 </label>
                 <div className="relative">
@@ -151,7 +163,7 @@ export default function ContactPage() {
                     id="email"
                     name="email"
                     type="email"
-                    className={`block w-full px-4 py-3 rounded-lg border ${formik.touched.email && formik.errors.email ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'} focus:ring-2 focus:outline-none transition`}
+                    className={`block w-full px-4 py-3 rounded-xl border-2 ${formik.touched.email && formik.errors.email ? 'border-red-300 focus:ring-2 focus:ring-red-200 focus:border-red-500' : 'border-gray-200 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500'} focus:outline-none transition bg-white/70 backdrop-blur-sm shadow-sm`}
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -172,7 +184,7 @@ export default function ContactPage() {
 
             <motion.div variants={inputAnimation}>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1 ml-1">
                   Your Message
                 </label>
                 <div className="relative">
@@ -180,7 +192,7 @@ export default function ContactPage() {
                     id="message"
                     name="message"
                     rows={5}
-                    className={`block w-full px-4 py-3 rounded-lg border ${formik.touched.message && formik.errors.message ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'} focus:ring-2 focus:outline-none transition`}
+                    className={`block w-full px-4 py-3 rounded-xl border-2 ${formik.touched.message && formik.errors.message ? 'border-red-300 focus:ring-2 focus:ring-red-200 focus:border-red-500' : 'border-gray-200 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500'} focus:outline-none transition bg-white/70 backdrop-blur-sm shadow-sm`}
                     value={formik.values.message}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -199,11 +211,15 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
-            <motion.div variants={inputAnimation}>
+            <motion.div 
+              variants={inputAnimation}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
               <button
                 type="submit"
                 disabled={formik.isSubmitting}
-                className="w-full px-6 py-3.5 text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 transform hover:-translate-y-1"
+                className="w-full px-6 py-4 text-base font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 hover:shadow-xl"
               >
                 {formik.isSubmitting ? (
                   <span className="flex items-center justify-center">
@@ -214,11 +230,53 @@ export default function ContactPage() {
                     Sending...
                   </span>
                 ) : (
-                  <span>Send Message</span>
+                  <span className="flex items-center justify-center">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Send Message
+                  </span>
                 )}
               </button>
             </motion.div>
           </form>
+        </motion.div>
+
+        {/* Additional Contact Info */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-3 text-center"
+        >
+          <div className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-md border border-white/20">
+            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 mb-4">
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-gray-900">Phone</h3>
+            <p className="mt-2 text-gray-600">+1 (555) 123-4567</p>
+          </div>
+          <div className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-md border border-white/20">
+            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 mb-4">
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-gray-900">Email</h3>
+            <p className="mt-2 text-gray-600">hello@example.com</p>
+          </div>
+          <div className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-md border border-white/20">
+            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 mb-4">
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-gray-900">Location</h3>
+            <p className="mt-2 text-gray-600">San Francisco, CA</p>
+          </div>
         </motion.div>
       </div>
     </div>
